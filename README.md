@@ -25,3 +25,33 @@ This project allows you to convert audio files to text and text files to audio. 
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/audio-to-text-converter.git
+
+
+Navigate to the project directory:
+
+
+cd audio-to-text-converter
+
+Install the required packages:
+
+pip install -r requirements.txt
+
+Run the application:
+
+python app.py
+
+
+Open your browser and go to http://127.0.0.1:5000/ to start using the application.
+
+License
+This project is licensed under the MIT License.
+
+
+
+### 4. הוספת קובץ `requirements.txt`
+קובץ `requirements.txt` מכיל את כל הספריות שהפרויקט שלך תלוי בהן. כדי ליצור את הקובץ הזה, הרץ את הפקודה הבאה בטרמינל שלך:
+
+```bash
+pip freeze > requirements.txt
+
+
