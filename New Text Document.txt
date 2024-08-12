@@ -1,0 +1,6 @@
+speech_to_text_project/
+│
+├── app.py
+├── templates/
+│   └── index.html
+└── uploads/
