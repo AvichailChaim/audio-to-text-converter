@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ממיר קול לטקסט</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #9adcfb, #5b92d9);
+            font-family: Arial, sans-serif;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .title {
+            font-size: 2em;
+            color: #2c5cb3;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .title::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+            transform: translateY(5px) scaleX(0.8);
+            filter: blur(2px);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .form-container, .text-container {
+            background-color: #e1e6f2;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 10px;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: right;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            font-weight: bold;
+            color: #333;
+            white-space: pre-wrap;
+            text-align: right;
+            direction: rtl;
+            height: 200px;
+            overflow-y: auto;
+        }
+
+        #downloadButton {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .text-container {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">מערכת להמרת קבצים אודיו לטקסט</div>
+
+    <div class="container">
+        <div class="form-container">
+            <h1>ממיר קבצים</h1>
+            <form id="uploadAudioForm">
+                <label for="fileInputAudio">בחר קובץ אודיו להמרה:</label><br><br>
+                <input type="file" id="fileInputAudio" name="fileInputAudio" accept=".wav,.mp3,.ogg"><br><br>
+                <button type="submit">העלה והמר אודיו</button>
+            </form>
+            <form id="uploadTextForm" style="margin-top: 20px;">
+                <label for="fileInputText">בחר קובץ טקסט להמרה:</label><br><br>
+                <input type="file" id="fileInputText" name="fileInputText" accept=".txt"><br><br>
+                <button type="submit">העלה והמר טקסט</button>
+            </form>
+            <a id="downloadButton" href="#" download>
+                <button>הורדת קובץ</button>
+            </a>
+        </div>
+        <div class="text-container">
+            <h2>תמליל ההקלטה</h2>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadAudioForm').onsubmit = async function(event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById('fileInputAudio').files[0];
+            if (!fileInput) {
+                alert("נא לבחור קובץ.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("fileInput", fileInput);
+
+            const response = await fetch('/upload_audio', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                document.getElementById('result').textContent = "שגיאה בהעלאת הקובץ.";
+                return;
+            }
+
+            const result = await response.json();
+            document.getElementById('result').textContent = result.text;
+
+            if (result.download_url) {
+                const downloadButton = document.getElementById('downloadButton');
+                downloadButton.href = result.download_url;
+                downloadButton.style.display = 'inline-block';
+            }
+        };
+
+        document.getElementById('uploadTextForm').onsubmit = async function(event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById('fileInputText').files[0];
+            if (!fileInput) {
+                alert("נא לבחור קובץ.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("fileInput", fileInput);
+
+            const response = await fetch('/upload_text', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                document.getElementById('result').textContent = "שגיאה בהעלאת הקובץ.";
+                return;
+            }
+
+            const result = await response.json();
+            document.getElementById('result').textContent = result.text;
+
+            if (result.download_url) {
+                const downloadButton = document.getElementById('downloadButton');
+                downloadButton.href = result.download_url;
+                downloadButton.style.display = 'inline-block';
+            }
+        };
+    </script>
+</body>
+</html>

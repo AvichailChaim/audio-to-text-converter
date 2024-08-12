@@ -1,0 +1,24 @@
+# Ignore Visual Studio temporary files and directories
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore Python compiled files
+__pycache__/
+*.py[cod]
+
+# Ignore environment files
+.env
+venv/
+
+# Ignore log files and databases
+*.log
+*.sqlite3
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Windows system files
+Thumbs.db
