@@ -1,57 +1,83 @@
-# audio-to-text-converter
-המרת קבצי טקסט לאודיו והמרת קבצי אודיו לטקסט
-# Audio to Text Converter
+המרת אודיו לטקסט
+המרת קבצי טקסט לאודיו והמרת קבצי אודיו לטקסט.
 
-This project allows you to convert audio files to text and text files to audio. It is built with Flask and uses Google Text-to-Speech for converting text to audio.
+סקירה כללית
+פרויקט זה מאפשר להמיר קבצי אודיו לטקסט וקבצי טקסט לאודיו. הפרויקט נבנה באמצעות Flask ומשתמש ב-Google Text-to-Speech (gTTS) להמרת טקסט לאודיו וב-Google Speech Recognition להמרת אודיו לטקסט.
 
-## Features
+תכונות
+המרת אודיו לטקסט: תמיכה בקבצי אודיו בפורמטים MP3, WAV, ו-OGG, והמרתם לטקסט באמצעות ה-API של Google Speech Recognition.
+המרת טקסט לאודיו: המרת קבצי טקסט לאודיו בפורמט MP3 באמצעות Google Text-to-Speech.
+ממשק פשוט: ממשק אינטרנטי קל לשימוש להעלאה ולעיבוד של קבצים.
+דרישות מקדימות
+Python 3.7 או גרסה גבוהה יותר
+Flask
+gTTS
+pydub
+התקנה
+שכפול המאגר (Repository):
 
-- Convert audio files (MP3, WAV, OGG) to text using Google's Speech Recognition.
-- Convert text files to audio (MP3) using Google Text-to-Speech.
-- Simple and easy to use interface.
-
-## Setup Instructions
-
-### Prerequisites
-
-- Python 3.7 or higher
-- Flask
-- gTTS
-- pydub
-
-### Installation
-
-1. Clone this repository:
-
-```bash
+bash
+Copy code
 git clone https://github.com/YOUR-USERNAME/audio-to-text-converter.git
+ניווט לתיקיית הפרויקט:
 
-
-Navigate to the project directory:
-
-
+bash
+Copy code
 cd audio-to-text-converter
+התקנת התלויות הנדרשות:
 
-Install the required packages:
+מומלץ להגדיר סביבה וירטואלית (לא חובה, אך מומלץ):
 
+bash
+Copy code
+python -m venv venv
+source venv/bin/activate   # ב-Windows: venv\Scripts\activate
+ולאחר מכן להתקין את התלויות:
+
+bash
+Copy code
 pip install -r requirements.txt
+הרצת האפליקציה:
 
-Run the application:
-
+bash
+Copy code
 python app.py
+גישה לאפליקציה:
 
+פתחו את הדפדפן והיכנסו לכתובת http://127.0.0.1:5000/ כדי להתחיל להשתמש באפליקציה.
 
-Open your browser and go to http://127.0.0.1:5000/ to start using the application.
+פריסה ב-Heroku
+להלן השלבים לפריסת האפליקציה ב-Heroku:
 
-License
-This project is licensed under the MIT License.
+יצירת אפליקציה ב-Heroku:
 
+bash
+Copy code
+heroku create your-app-name
+דחיפת הקוד ל-Heroku:
 
+bash
+Copy code
+git push heroku master
+הגדלת ה-Dynos:
 
-### 4. הוספת קובץ `requirements.txt`
-קובץ `requirements.txt` מכיל את כל הספריות שהפרויקט שלך תלוי בהן. כדי ליצור את הקובץ הזה, הרץ את הפקודה הבאה בטרמינל שלך:
+bash
+Copy code
+heroku ps:scale web=1
+פתיחת האפליקציה:
 
-```bash
+bash
+Copy code
+heroku open
+רישיון
+הפרויקט הזה מוגן תחת רישיון MIT.
+
+הערות נוספות:
+קובץ דרישות (requirements.txt):
+יש ליצור את הקובץ requirements.txt באמצעות הפקודה:
+
+bash
+Copy code
 pip freeze > requirements.txt
-
-
+סביבה וירטואלית:
+מומלץ להשתמש בסביבה וירטואלית כדי לנהל את התלויות של Python בפרויקט. כך תבטיחו שהפרויקט שלכם מבודד מפרויקטי Python אחרים במערכת שלכם.
