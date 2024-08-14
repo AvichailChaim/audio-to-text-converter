@@ -2,7 +2,7 @@
 המרת קבצי טקסט לאודיו והמרת קבצי אודיו לטקסט.
 
 סקירה כללית
-פרויקט זה מאפשר להמיר קבצי אודיו לטקסט וקבצי טקסט לאודיו. הפרויקט נבנה באמצעות Flask ומשתמש ב-Google Text-to-Speech (gTTS) להמרת טקסט לאודיו וב-Google Speech Recognition להמרת אודיו לטקסט.
+פרויקט זה מאפשר להמיר קבצי אודיו לטקסט וקבצי טקסט לאודיו. הפרויקט נבנה על ידי אביחיל חיים דוויק באמצעות Flask ומשתמש ב-Google Text-to-Speech (gTTS) להמרת טקסט לאודיו וב-Google Speech Recognition להמרת אודיו לטקסט.
 
 תכונות
 המרת אודיו לטקסט: תמיכה בקבצי אודיו בפורמטים MP3, WAV, ו-OGG, והמרתם לטקסט באמצעות ה-API של Google Speech Recognition.
@@ -18,7 +18,7 @@ pydub
 
 bash
 Copy code
-git clone https://github.com/YOUR-USERNAME/audio-to-text-converter.git
+git clone https://github.com/AvichailChaim/audio-to-text-converter.git
 ניווט לתיקיית הפרויקט:
 
 bash
@@ -70,7 +70,7 @@ bash
 Copy code
 heroku open
 רישיון
-הפרויקט הזה מוגן תחת רישיון MIT.
+הפרויקט הזה נבנה על ידי אביחיל חיים דוויק ומוגן תחת רישיון MIT.
 
 הערות נוספות:
 קובץ דרישות (requirements.txt):
