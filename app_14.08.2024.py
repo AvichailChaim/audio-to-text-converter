@@ -70,7 +70,7 @@ def upload_text_file():
         with open(filepath, 'r', encoding="utf-8") as text_file:
             text = text_file.read()
 
-        tts = gTTS(text, lang='iw')  # עדכון השפה ל'iw'
+        tts = gTTS(text, lang='iw')  # שימוש ב-gTTS לשפה העברית
         output_audio_path = os.path.join(OUTPUT_FOLDER, os.path.splitext(filename)[0] + ".mp3")
         tts.save(output_audio_path)
 
@@ -84,4 +84,6 @@ def download_file(filename):
     return send_from_directory(OUTPUT_FOLDER, filename, as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
+
