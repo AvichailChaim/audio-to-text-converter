@@ -3,6 +3,8 @@ import os
 import speech_recognition as sr
 from pydub import AudioSegment
 from gtts import gTTS
+from docx import Document
+import pdfplumber
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads/'
@@ -61,6 +63,47 @@ def upload_audio_file():
             return jsonify({'text': 'לא זוהה טקסט'})
         except sr.RequestError:
             return jsonify({'text': 'שגיאה בשירות זיהוי הדיבור'})
+
+@app.route('/upload_text', methods=['POST'])
+def upload_text_file():
+    if 'fileInput' not in request.files:
+        return jsonify({'text': 'לא נבחר קובץ'})
+
+    file = request.files['fileInput']
+    filename = file.filename
+    filepath = os.path.join(UPLOAD_FOLDER, filename)
+    file.save(filepath)
+
+    text = ""
+
+    if filename.endswith('.txt'):
+        # קריאת תוכן מקובץ טקסט
+        with open(filepath, 'r', encoding="utf-8") as text_file:
+            text = text_file.read()
+    elif filename.endswith('.pdf'):
+        # קריאת תוכן מקובץ PDF
+        with pdfplumber.open(filepath) as pdf:
+            for page in pdf.pages:
+                text += page.extract_text()
+    elif filename.endswith('.docx'):
+        # קריאת תוכן מקובץ DOCX
+        doc = Document(filepath)
+        for paragraph in doc.paragraphs:
+            text += paragraph.text + "\n"
+    elif filename.endswith('.doc'):
+        # קריאת תוכן מקובץ DOC באמצעות pywin32 (מיועד לחלונות בלבד)
+        return jsonify({'text': 'פורמט DOC לא נתמך בגרסה זו'})
+    else:
+        return jsonify({'text': 'פורמט קובץ לא נתמך'})
+
+    if text:
+        tts = gTTS(text, lang='iw')  # שימוש ב-gTTS לשפה העברית
+        output_audio_path = os.path.join(OUTPUT_FOLDER, os.path.splitext(filename)[0] + ".mp3")
+        tts.save(output_audio_path)
+
+        return jsonify({'text': text, 'download_url': f'/download/{os.path.basename(output_audio_path)}'})
+    else:
+        return jsonify({'text': 'לא נמצא תוכן להמרה'})
 
 @app.route('/download/<filename>')
 def download_file(filename):
